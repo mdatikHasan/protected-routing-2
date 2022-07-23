@@ -5,8 +5,8 @@ import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
     const [gUser, setGUser] = useState({})
-    const {signInUsingGoogle} = useAuth()
-    
+    const {signInUsingGoogle, signInUsingGithub} = useAuth()
+    console.log(gUser);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -18,8 +18,15 @@ const Login = () => {
         })
     }
 
+    const handleGithubSignIn = () => {
+        signInUsingGithub()
+        .then(result => {
+            setGUser(result.user)
+        })
+    }
+
     useEffect(() => {
-        if(gUser?.email){
+        if(gUser?.displayName){
             navigate(from, {replace: true});
         }
     } ,[from, gUser, navigate])
@@ -27,6 +34,7 @@ const Login = () => {
         <div>
             <h1>Please Login</h1>
             <button onClick={handleGoogleSignIn}>Google Sign In</button>
+            <button onClick={handleGithubSignIn}>GitHub Sign In</button>
         </div>
     );
 };

@@ -11,7 +11,7 @@ const PrivateRoute = ({children}) => {
     if(isLoading){
         return <Spinner animation='border' variant='primary'></Spinner>
     }
-    if(!user.email){
+    if(!user.displayName){
         return <Navigate to='/login' state={{from: location}}></Navigate>
     }
     return children

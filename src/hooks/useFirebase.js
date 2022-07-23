@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import initializeAuthentication from '../Firebase/firebase.init';
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, GithubAuthProvider} from "firebase/auth";
 
 
 initializeAuthentication();
@@ -10,12 +10,27 @@ const useFirebase = () => {
 
     const auth = getAuth();
     const googoleProvider = new GoogleAuthProvider();
-
+    const githubProvider = new GithubAuthProvider()
+    // Sign In Using Google
     const signInUsingGoogle = () => {
         setIsLoading(true)
         return signInWithPopup(auth, googoleProvider)
                 .finally(() => setIsLoading(false))
     };
+
+    // sign In With Email And Password 
+
+    /* const registrattionEmailandPassWord = () =>{
+        signInWithEmailAndPassword(auth, email, )
+    } */
+
+    // sign in with git hub
+
+    const signInUsingGithub = () => {
+        setIsLoading(true)
+        return signInWithPopup(auth, githubProvider)
+                .finally(() => setIsLoading(false))
+    }
 
     useEffect(() => {
         const unSubscribed = onAuthStateChanged(auth, user=> {
@@ -40,6 +55,7 @@ const useFirebase = () => {
         user,
         isLoading,
         signInUsingGoogle,
+        signInUsingGithub,
         logOut
     }
 
